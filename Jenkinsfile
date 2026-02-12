@@ -1,52 +1,40 @@
-
 pipeline {
-    agent  { label 'kavya'} 
+    agent { label 'kavya' }
 
+    environment {
+        PROJECT = 'expense'
+        ENVIRONMENT = 'Dev'
+        APP_VERSION = ''
+    }
 
-        environment {
-            PROJECT = 'expense'
-            ENVIRONMENT = 'Dev'
-            APP_VERSION = ''
-        }
-        options {
-            disableConcurrentBuilds ()
-            timeout (time: 30, unit: 'MINUTES')
-        }
-        
-        stages {
-            stage ( 'Read version') {
-                steps {
-                    script {
+    options {
+        disableConcurrentBuilds()
+        timeout(time: 30, unit: 'MINUTES')
+    }
+
+    stages {
+        stage('Read Version') {
+            steps {
+                script {
                     def packageJson = readJSON file: 'package.json'
                     APP_VERSION = packageJson.version
-                    echo "appversion is $APP_VERSION"
-                    }
+                    echo "App version is ${APP_VERSION}"
                 }
-          
-          
             }
-            
         }
-
-        
-    
+    }
 
     post {
-        always  {
-            echo "i will say again hello "
+        always {
+            echo "I will say again hello"
         }
-
 
         success {
-        echo "I will say for sucess"
+            echo "I will say for success"
         }
-    
 
         failure {
-        echo "i willsay for failure"
+            echo "I will say for failure"
+        }
     }
-
-    }
-
-
 }
