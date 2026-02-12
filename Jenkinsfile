@@ -1,6 +1,6 @@
 
 pipeline {
-    agent  { label 'kavya'} {
+    agent  { label 'kavya'} 
 
 
         environment {
@@ -14,7 +14,7 @@ pipeline {
         }
         
         stages {
-            stage {
+            stage ( 'Read version') {
                 steps {
                     script {
                     def packageJson = readJSON file: 'package.json'
