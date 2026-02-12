@@ -32,8 +32,10 @@ pipeline {
         stage('Read Version') {
             steps {
                 script {
-                    def packageJson = readJSON file: 'package.json'
+                    def content = readFile('package.json')
+                    def packageJson = new groovy.json.JsonSlurper().parseText(content)
                     echo "Version is: ${packageJson.version}"
+
                 }
             }
         }
