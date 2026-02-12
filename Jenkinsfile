@@ -21,6 +21,13 @@ pipeline {
                }
             }
         }
+        stage('Debug JSON File') {
+    steps {
+        sh 'ls -l'
+        sh 'cat package.json'
+    }
+}
+
         
        
     }
