@@ -1,0 +1,11 @@
+pipeline {
+    Agent { lable 'kavya'} {
+        steps {
+            stages {
+                stage {
+                    
+                }
+            }
+        }
+    }
+}
