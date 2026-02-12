@@ -1,6 +1,6 @@
 
 pipeline {
-    AGENT = { label 'kavya'} {
+    agent  { label 'kavya'} {
 
 
         environment {
