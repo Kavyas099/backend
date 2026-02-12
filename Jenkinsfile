@@ -1,46 +1,39 @@
 pipeline {
-    agent { label 'kavya' }
-
-    environment {
+    agent { label 'AGENT-1' }
+    environment { 
         PROJECT = 'expense'
-        ENVIRONMENT = 'Dev'
-        APP_VERSION = ''
+        COMPONENT = 'backend'
+        appVersion = ''
+        ACC_ID = '315069654700'
     }
-
     options {
         disableConcurrentBuilds()
         timeout(time: 30, unit: 'MINUTES')
     }
-
+   
     stages {
         stage('Read Version') {
             steps {
-                script {
-                    def packageJson = readJSON file: 'package.json'
-                    APP_VERSION = packageJson.version
-                    echo "App version is ${APP_VERSION}"
-                }
+               script{
+                 def packageJson = readJSON file: 'package.json'
+                 appVersion = packageJson.version
+                 echo "Version is: $appVersion"
+               }
             }
         }
-        stage('Debug Files') {
-        steps {
-        sh 'pwd'
-        sh 'ls -l'
+        
+       
     }
-}
-    }
-
-    post {
-        always {
-            echo "I will say again hello"
+    post { 
+        always { 
+            echo 'I will always say Hello again!'
+            deleteDir()
         }
-
-        success {
-            echo "I will say for success"
+        failure { 
+            echo 'I will run when pipeline is failed'
         }
-
-        failure {
-            echo "I will say for failure"
+        success { 
+            echo 'I will run when pipeline is success'
         }
     }
 }
