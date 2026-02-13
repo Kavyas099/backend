@@ -49,6 +49,17 @@ pipeline {
                 }
             }
         }
+
+        stage{
+            steps{
+                script {
+                    sh '''
+                    docker build -t backend:1.0.0 .
+                    '''
+                    }
+                }
+            }
+        
     }
 
     post { 
