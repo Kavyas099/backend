@@ -5,7 +5,7 @@ pipeline {
         PROJECT = 'expense'
         COMPONENT = 'backend'
         appVersion = ''
-        ACC_ID = '315069654700'
+        ACC_ID = '130954245108'
     }
 
     options {
@@ -53,12 +53,13 @@ pipeline {
         stage ( 'build image'){
             steps{
                 script {
-                    sh '''
-                    docker build -t backend:1.0.0 .
-                    '''
-                    }
+                    sh """
+            aws ecr get-login-password --region us-east-1 | \
+            docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com
+                    """
                 }
             }
+        }
         
     }
 
