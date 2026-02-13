@@ -32,7 +32,8 @@ pipeline {
         stage('Read Version') {
             steps {
                 script {
-                    def content = readFile('package.json')
+                    def content = readFile('package.json') 
+                  
                     def packageJson = new groovy.json.JsonSlurper().parseText(content)
                     echo "Version is: ${packageJson.version}"
 
@@ -57,7 +58,8 @@ pipeline {
                         sh """
             aws ecr get-login-password --region us-east-1 | \
             docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com
-                docker build -t ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion }.
+                docker build -t ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion} .
+ }.
                      docker push    ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
                             """
               
