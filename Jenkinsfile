@@ -39,6 +39,16 @@ pipeline {
                 }
             }
         }
+
+        stage ( 'install depends') {
+            steps {
+                script {
+                    sh '''
+                    npm install
+                    '''
+                }
+            }
+        }
     }
 
     post { 
