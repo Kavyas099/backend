@@ -50,7 +50,7 @@ pipeline {
             }
         }
 
-        stage{
+        stage ( 'build image'){
             steps{
                 script {
                     sh '''
