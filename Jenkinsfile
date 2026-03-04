@@ -1,8 +1,8 @@
 pipeline {
     agent { label 'kavya' }
     environment { 
-        PROJECT = 'expense'
-        COMPONENT = 'backend'
+        project = 'expense'
+        component = 'backend'
         appVersion = ''
         ACC_ID = '315069654700'
     }
@@ -14,6 +14,11 @@ pipeline {
         booleanParam(name: 'deploy', defaultValue: false, description: 'Toggle this value')
     }
     stages {
+        stage('Checkout Code') {
+        steps {
+            checkout scm
+        }
+    }
         stage('Read Version') {
             steps {
                script{
