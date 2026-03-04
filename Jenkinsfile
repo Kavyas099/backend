@@ -58,26 +58,32 @@ pipeline {
     steps {
         script{
             withAWS(region: 'us-east-1', credentials: 'aws-creds') {
+
                 sh """
                 aws ecr get-login-password --region us-east-1 | \
-                docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com
+                docker login --username AWS --password-stdin ${env.ACC_ID}.dkr.ecr.us-east-1.amazonaws.com
+                """
 
-                docker build -t ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${project}/${component}:${appVersion} .
+                sh """
+                docker build -t ${env.ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${env.project}/${env.component}:${appVersion} .
+                """
 
-                docker push ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${project}/${component}:${appVersion}
+                sh """
+                docker push ${env.ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${env.project}/${env.component}:${appVersion}
                 """
             }
         }
     }
 }
-        // stage('Trigger Deploy'){
-        //     when { 
-        //         expression { params.deploy }
-        //     }
-        //     steps{
-        //         build job: 'backend-cd', parameters: [string(name: 'version', value: "${appVersion}")], wait: true
-        //     }
-        // }
+
+          stage('Trigger Deploy'){
+          when { 
+                expression { params.deploy }
+             }
+           steps{
+               build job: 'backend-cd', parameters: [string(name: 'version', value: "${appVersion}")], wait: true
+            }
+            } 
     }
     post { 
         always { 
