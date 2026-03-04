@@ -14,11 +14,7 @@ pipeline {
         booleanParam(name: 'deploy', defaultValue: false, description: 'Toggle this value')
     }
     stages {
-        stage('Checkout Code') {
-        steps {
-            checkout scm
-        }
-    }
+        
         stage('Read Version') {
             steps {
                script{
