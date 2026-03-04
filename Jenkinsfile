@@ -14,16 +14,19 @@ pipeline {
         booleanParam(name: 'deploy', defaultValue: false, description: 'Toggle this value')
     }
     stages {
-        
         stage('Read Version') {
-            steps {
-               script{
-                 def packageJson = readJSON file: 'package.json'
-                 appVersion = packageJson.version
-                 echo "Version is: $appVersion"
-               }
-            }
+    steps {
+        script {
+            sh "pwd"
+            sh "ls -l"
+            sh "cat package.json"
+
+            def packageJson = readJSON file: 'package.json'
+            appVersion = packageJson.version
+            echo "Version is: ${appVersion}"
         }
+    }
+}
         stage('Install Dependencies') {
             steps {
                script{ 
